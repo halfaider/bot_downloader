@@ -250,14 +250,15 @@ class ModelVodItem(ModelBase):
     def web_list(cls, req):
         ret = super().web_list(req)
         try:
-            ModelRequestItem = F.PluginManager.get_plugin_instance('gds_tool').ModelRequestItem
-            for item in ret['list']:
-                if item['request_db_id'] != None:
-                    req_item = ModelRequestItem.get_by_id(item['request_db_id'])
-                    if req_item != None:
-                        item['request_item'] = req_item.as_dict()
-                    else:
-                        item['request_item'] = None
+            if F.PluginManager.get_plugin_instance('gds_tool'):
+                ModelRequestItem = F.PluginManager.get_plugin_instance('gds_tool').ModelRequestItem
+                for item in ret['list']:
+                    if item['request_db_id'] != None:
+                        req_item = ModelRequestItem.get_by_id(item['request_db_id'])
+                        if req_item != None:
+                            item['request_item'] = req_item.as_dict()
+                        else:
+                            item['request_item'] = None
         except Exception as e:
             cls.P.logger.error(f'Exception:{str(e)}')
             cls.P.logger.error(traceback.format_exc())

@@ -1,5 +1,5 @@
 title: "봇 다운로더"
-version: "1.0.0"
+version: "1.0.1"
 package_name: "bot_downloader"
 developer: "flaskfarm"
 description: "봇 다운로더"
